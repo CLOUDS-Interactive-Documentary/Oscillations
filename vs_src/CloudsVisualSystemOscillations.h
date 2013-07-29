@@ -3,7 +3,7 @@
 //
 // VISUAL SYSTEMS
 //
-// Welcome to the EMPTY CloudsVisualSystem
+// Welcome to the Oscillations CloudsVisualSystem
 //
 //
 //
@@ -11,16 +11,19 @@
 #pragma once
 
 #include "CloudsVisualSystem.h"
+#include "ofxAutoReloadedShader.h"
+
+
 
 //TODO: rename this to your own visual system
-class CloudsVisualSystemEmpty : public CloudsVisualSystem {
+class CloudsVisualSystemOscillations : public CloudsVisualSystem {
   public:
     
 	//TODO: Change this to the name of your visual system
 	//This determines your data path so name it at first!
 	//ie getVisualSystemDataPath() uses this
     string getSystemName(){
-		return "EmptySystem";
+		return "OscillationsSystem";
 	}
 
 	//These methods let us add custom GUI parameters and respond to their events
@@ -69,7 +72,10 @@ class CloudsVisualSystemEmpty : public CloudsVisualSystem {
 	
 	// or you can use selfDrawBackground to do 2D drawings that don't use the 3D camera
 	void selfDrawBackground();
-
+    
+    //Overrride
+    void selfPostDraw();
+    
 	// this is called when your system is no longer drawing.
 	// Right after this selfUpdate() and selfDraw() won't be called any more
 	void selfEnd();
@@ -98,11 +104,22 @@ protected:
     
     //  Your Stuff
     //
-	
+    
+    float width,height; 
+    float offsetX, offsetY;
+    
+//    ofVbo vbo;
+    ofVboMesh mesh;
+    float heightFactor, precision;
+    float curveProgress, speed, lineWidth;
+    float curveHeight, curveWidth, curveDepth, curveZPos;
+    float chromaAbbr, lensDistortion;
+    ofxAutoReloadedShader crtShader;
+    
 	ofxUISuperCanvas* customGui;
 	bool customToggle;
-	float customFloat1;
-	float customFloat2;
 	
 	ofImage someImage;
+
+
 };
