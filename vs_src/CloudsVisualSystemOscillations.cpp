@@ -125,8 +125,8 @@ void CloudsVisualSystemOscillations::selfSceneTransformation(){
 void CloudsVisualSystemOscillations::selfUpdate(){
     
     
-    width = ofGetScreenWidth();
-    height = ofGetScreenHeight();
+    width = ofGetWidth();
+    height = ofGetHeight();
     
     offsetX += speed;
     
