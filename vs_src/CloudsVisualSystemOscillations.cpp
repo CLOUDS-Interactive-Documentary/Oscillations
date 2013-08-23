@@ -81,7 +81,7 @@ void CloudsVisualSystemOscillations::selfSetup(){
     
     
     ofEnableAlphaBlending();
-	loadTestVideo();
+//	loadTestVideo();
     
     ofFloatColor zero = ofFloatColor(0,0,0);
     for (int i = 0; i < NUMPOINTS ; i++){
