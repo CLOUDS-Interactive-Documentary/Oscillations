@@ -41,9 +41,8 @@ void CloudsVisualSystemOscillations::selfSetupGui(){
 //    customGui->addSlider("Chromatic Abberation", 0, 1, &chromaAbbr);
 //    customGui->addSlider("Chromatic Abberation", 0, 1, &chromaAbbr);
 
-    
-//	customGui->addButton("Custom Button", false);
-//	customGui->addToggle("Custom Toggle", &customToggle);
+//	customGui->addButton("Invert Color Scheme", false);
+	customGui->addToggle("Black on white", &invertColorScheme);
 	
 	ofAddListener(customGui->newGUIEvent, this, &CloudsVisualSystemOscillations::selfGuiEvent);
 	
@@ -82,6 +81,7 @@ void CloudsVisualSystemOscillations::selfSetup(){
     
     ofEnableAlphaBlending();
 	loadTestVideo();
+    
     
     ofFloatColor zero = ofFloatColor(0,0,0);
     for (int i = 0; i < NUMPOINTS ; i++){
@@ -132,8 +132,8 @@ void CloudsVisualSystemOscillations::selfUpdate(){
     
     float px, py, pz;
     
-    ofFloatColor zero = ofFloatColor(0,0,0,0);
-    ofFloatColor c = ofFloatColor(1,1,1,0.2);
+    ofFloatColor zero = invertColorScheme? ofFloatColor(1,1,1,0) : ofFloatColor(0,0,0,0); //neccessary to have two?
+    ofFloatColor c =    invertColorScheme? ofFloatColor(0,0,0,0.1) : ofFloatColor(1,1,1,0.2);
     
     for (int i = 0; i < NUMPOINTS;  i++){
         mesh.setColor(i, (i/(NUMPOINTS*1.0))>curveProgress ? zero : c);
@@ -147,8 +147,9 @@ void CloudsVisualSystemOscillations::selfUpdate(){
 // selfDraw draws in 3D using the default ofEasyCamera
 // you can change the camera by returning getCameraRef()
 void CloudsVisualSystemOscillations::selfDraw(){
+    ofBackground(invertColorScheme? ofColor(180,180,180) : ofColor(0,0,0));
     glDisable(GL_DEPTH_TEST);
-    ofSetColor(255, 255, 255, 30);
+
     mesh.setMode(OF_PRIMITIVE_LINE_LOOP);
     ofSetLineWidth(lineWidth);
 	mesh.drawWireframe();

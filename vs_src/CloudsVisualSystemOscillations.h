@@ -118,6 +118,7 @@ protected:
     
 	ofxUISuperCanvas* customGui;
 	bool customToggle;
+    bool invertColorScheme;
 	
 	ofImage someImage;
 
