@@ -103,6 +103,8 @@
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E761F4D81622CA3D00029E43 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E761F4D71622CA3D00029E43 /* Accelerate.framework */; };
+		E7AC9A7317A7767A002B8A43 /* oscillationsShader.frag in Sources */ = {isa = PBXBuildFile; fileRef = E7AC9A7117A7767A002B8A43 /* oscillationsShader.frag */; };
+		E7AC9A7417A7767A002B8A43 /* oscillationsShader.vert in Sources */ = {isa = PBXBuildFile; fileRef = E7AC9A7217A7767A002B8A43 /* oscillationsShader.vert */; };
 		E7D26E5817A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D26E5617A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp */; };
 		E7D26E5C17A2F0CF00652876 /* CloudsRGBDCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D26E5A17A2F0CF00652876 /* CloudsRGBDCamera.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
@@ -405,6 +407,8 @@
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		E761F4D71622CA3D00029E43 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
+		E7AC9A7117A7767A002B8A43 /* oscillationsShader.frag */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = oscillationsShader.frag; path = bin/data/shaders/oscillationsShader.frag; sourceTree = SOURCE_ROOT; };
+		E7AC9A7217A7767A002B8A43 /* oscillationsShader.vert */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; name = oscillationsShader.vert; path = bin/data/shaders/oscillationsShader.vert; sourceTree = SOURCE_ROOT; };
 		E7D26E5617A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudsRGBDVideoPlayer.cpp; sourceTree = "<group>"; };
 		E7D26E5717A2E63A00652876 /* CloudsRGBDVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsRGBDVideoPlayer.h; sourceTree = "<group>"; };
 		E7D26E5A17A2F0CF00652876 /* CloudsRGBDCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudsRGBDCamera.cpp; sourceTree = "<group>"; };
@@ -819,6 +823,8 @@
 		3DA45C5F179DB6C3002EC0AC /* vs_src */ = {
 			isa = PBXGroup;
 			children = (
+				E7AC9A7117A7767A002B8A43 /* oscillationsShader.frag */,
+				E7AC9A7217A7767A002B8A43 /* oscillationsShader.vert */,
 				3DA460BB179EC5C2002EC0AC /* CloudsVisualSystemOscillations.h */,
 				3DA460BA179EC5C2002EC0AC /* CloudsVisualSystemOscillations.cpp */,
 			);
@@ -1281,6 +1287,8 @@
 				E7D26E5817A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp in Sources */,
 				E7D26E5C17A2F0CF00652876 /* CloudsRGBDCamera.cpp in Sources */,
 				17AB3FB717A4E24200CE2E8B /* ofxAutoReloadedShader.cpp in Sources */,
+				E7AC9A7317A7767A002B8A43 /* oscillationsShader.frag in Sources */,
+				E7AC9A7417A7767A002B8A43 /* oscillationsShader.vert in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
