@@ -80,7 +80,7 @@ void CloudsVisualSystemOscillations::selfSetup(){
     
     
     ofEnableAlphaBlending();
-	loadTestVideo();
+//	loadTestVideo();
     
     
     ofFloatColor zero = ofFloatColor(0,0,0);
@@ -125,8 +125,8 @@ void CloudsVisualSystemOscillations::selfSceneTransformation(){
 void CloudsVisualSystemOscillations::selfUpdate(){
     
     
-    width = ofGetScreenWidth();
-    height = ofGetScreenHeight();
+    width = ofGetWidth();
+    height = ofGetHeight();
     
     offsetX += speed;
     

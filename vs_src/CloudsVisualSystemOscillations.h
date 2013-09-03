@@ -23,7 +23,7 @@ class CloudsVisualSystemOscillations : public CloudsVisualSystem {
 	//This determines your data path so name it at first!
 	//ie getVisualSystemDataPath() uses this
     string getSystemName(){
-		return "OscillationsSystem";
+		return "Oscillations";
 	}
 
 	//These methods let us add custom GUI parameters and respond to their events
@@ -66,9 +66,6 @@ class CloudsVisualSystemOscillations : public CloudsVisualSystem {
 	
     // draw any debug stuff here
 	void selfDrawDebug();
-
-	//draws through RGBD camera;
-//	void selfDrawRGBD();
 	
 	// or you can use selfDrawBackground to do 2D drawings that don't use the 3D camera
 	void selfDrawBackground();
