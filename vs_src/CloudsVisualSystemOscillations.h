@@ -14,7 +14,6 @@
 #include "ofxAutoReloadedShader.h"
 
 
-
 //TODO: rename this to your own visual system
 class CloudsVisualSystemOscillations : public CloudsVisualSystem {
   public:

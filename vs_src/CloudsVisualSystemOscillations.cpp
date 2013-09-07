@@ -32,7 +32,7 @@ void CloudsVisualSystemOscillations::selfSetupGui(){
     customGui->addSlider("Line Width", 0, 20, &lineWidth);
     
     
-//    customGui = new ofxUISuperCanvas("Shader", gui);
+//  customGui = new ofxUISuperCanvas("Shader", gui);
 //	customGui->copyCanvasStyle(gui);
 //	customGui->copyCanvasProperties(gui);
 //	customGui->setName("Lens Effects");
@@ -43,7 +43,9 @@ void CloudsVisualSystemOscillations::selfSetupGui(){
 
 //	customGui->addButton("Invert Color Scheme", false);
 	customGui->addToggle("Black on white", &invertColorScheme);
-	
+//	customGui->addToggle("", &)
+    
+    
 	ofAddListener(customGui->newGUIEvent, this, &CloudsVisualSystemOscillations::selfGuiEvent);
 	
 	guis.push_back(customGui);
@@ -82,7 +84,6 @@ void CloudsVisualSystemOscillations::selfSetup(){
     ofEnableAlphaBlending();
 //	loadTestVideo();
     
-    
     ofFloatColor zero = ofFloatColor(0,0,0);
     for (int i = 0; i < NUMPOINTS ; i++){
         mesh.addColor(zero);
@@ -96,7 +97,6 @@ void CloudsVisualSystemOscillations::selfSetup(){
     
     crtShader.load(getVisualSystemDataPath() +"shaders/oscillationsShader");
     
-	
 //	someImage.loadImage( getVisualSystemDataPath() + "images/someImage.png";
 	
 }
