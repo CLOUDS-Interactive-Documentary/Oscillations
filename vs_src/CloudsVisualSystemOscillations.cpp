@@ -260,17 +260,18 @@ void CloudsVisualSystemOscillations::BuildGrid(){
     
     for (float x = GridClipping.low; x < GridClipping.high ; x += spacing){
         for (float y = GridClipping.low; y < GridClipping.high ; y +=spacing){
-            float _x1, _x2, _y1, _y2, _z1, _z2;
+            float _x1, _x2 = x;
+            float _y1, _y2 = y;
+            float _z1 = GridClipping.low, _z2 = GridClipping.high;
+
             for (int i = 0 ; i < 3 ; i++){
-                switch (i){
-                    case 0: _x1 = _x2 = x; _y1 = _y2 = y; _z1 = GridClipping.low; _z2 = GridClipping.high; break;
-                    case 1: _x1 = _x2 = x; _z1 = _z2 = y; _y1 = GridClipping.low; _y2 = GridClipping.high; break;
-                    case 2: _z1 = _z2 = x; _y1 = _y2 = y; _x1 = GridClipping.low; _x2 = GridClipping.high; break;
-                }
                 grid.addVertex(ofPoint(_x1,_y1,_z1));
-                grid.addColor(c);
                 grid.addVertex(ofPoint(_x2,_y2,_z2));
                 grid.addColor(c);
+                grid.addColor(c);
+                //Group theory in your face huh.
+                swap(_x1, _y1); swap(_y1, _z1);
+                swap(_x2, _y2); swap(_y2, _z2);
             }
         }
     }
