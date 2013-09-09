@@ -31,6 +31,7 @@ void CloudsVisualSystemOscillations::selfSetupGui(){
 	customGui->addSlider("Speed", 0, 1, &speed);
     customGui->addSlider("Line Width", 0, 20, &lineWidth);
     
+    customGui->addToggle("Black on white", &invertColorScheme);
     
 //  customGui = new ofxUISuperCanvas("Shader", gui);
 //	customGui->copyCanvasStyle(gui);
@@ -39,23 +40,39 @@ void CloudsVisualSystemOscillations::selfSetupGui(){
 //	customGui->setWidgetFontSize(OFX_UI_FONT_SMALL);
 //    
 //    customGui->addSlider("Chromatic Abberation", 0, 1, &chromaAbbr);
-//    customGui->addSlider("Chromatic Abberation", 0, 1, &chromaAbbr);
 
-//	customGui->addButton("Invert Color Scheme", false);
-	customGui->addToggle("Black on white", &invertColorScheme);
-//	customGui->addToggle("", &)
+
+    ofAddListener(customGui->newGUIEvent, this, &CloudsVisualSystemOscillations::selfGuiEvent);
     
-    
-	ofAddListener(customGui->newGUIEvent, this, &CloudsVisualSystemOscillations::selfGuiEvent);
+    gridControls = new ofxUISuperCanvas("Grid", gui);
+    gridControls->copyCanvasStyle(gui);
+	gridControls->copyCanvasProperties(gui);
+	gridControls->setName("Grid");
+	gridControls->setWidgetFontSize(OFX_UI_FONT_SMALL);
+
+    gridControls->addToggle("Display Grid", &displayGrid);
+    gridControls->addRangeSlider("Range", -5000, 5000, &(GridClipping.low), &(GridClipping.high));
+    gridControls->addSlider("Spacing", 10, 5000, &GridPointSpacing);
+    gridControls->addSlider("Alpha", 0, 1, &GridPointAlpha);
+
+    ofAddListener(gridControls->newGUIEvent, this, &CloudsVisualSystemOscillations::selfGuiEvent);
 	
-	guis.push_back(customGui);
-	guimap[customGui->getName()] = customGui;
+    
+    guis.push_back(customGui);
+    guis.push_back(gridControls);
+    guimap[customGui->getName()] = customGui;
+	guimap[gridControls->getName()] = gridControls;
 }
 
 void CloudsVisualSystemOscillations::selfGuiEvent(ofxUIEventArgs &e){
-	if(e.widget->getName() == "Custom Button"){
-		cout << "Button pressed!" << endl;
-	}
+//	if(e.widget->getName() == "Custom Button"){
+//		cout << "Button pressed!" << endl;
+//	}
+
+    //Check if the grid was updated
+    if (e.getName() == "Grid"){
+        BuildGrid();
+    }
 }
 
 //Use system gui for global or logical settings, for exmpl
@@ -82,7 +99,6 @@ void CloudsVisualSystemOscillations::selfSetup(){
     
     
     ofEnableAlphaBlending();
-//	loadTestVideo();
     
     ofFloatColor zero = ofFloatColor(0,0,0);
     for (int i = 0; i < NUMPOINTS ; i++){
@@ -94,10 +110,19 @@ void CloudsVisualSystemOscillations::selfSetup(){
     //TODO: Find way to update on every resize
     
     offsetX = offsetY = 0;
+   /*
+    GridClipping.x.low= -3000;
+    GridClipping.x.high= 3000;
+    GridClipping.y.low= -3000;
+    GridClipping.y.high= 3000;
+    GridClipping.z.low=  3000;
+    GridClipping.z.high=-3000;
+    GridPointSpacing = 100;
+    GridPointAlpha = 1;
+    */
+    BuildGrid();
     
     crtShader.load(getVisualSystemDataPath() +"shaders/oscillationsShader");
-    
-//	someImage.loadImage( getVisualSystemDataPath() + "images/someImage.png";
 	
 }
 
@@ -124,32 +149,38 @@ void CloudsVisualSystemOscillations::selfSceneTransformation(){
 //normal update call
 void CloudsVisualSystemOscillations::selfUpdate(){
     
-    
     width = ofGetWidth();
     height = ofGetHeight();
     
     offsetX += speed;
     
     float px, py, pz;
-    
     ofFloatColor zero = invertColorScheme? ofFloatColor(1,1,1,0) : ofFloatColor(0,0,0,0); //neccessary to have two?
     ofFloatColor c =    invertColorScheme? ofFloatColor(0,0,0,0.1) : ofFloatColor(1,1,1,0.2);
-    
     for (int i = 0; i < NUMPOINTS;  i++){
         mesh.setColor(i, (i/(NUMPOINTS*1.0))>curveProgress ? zero : c);
         px = cos((0.7+ 0.09 * 0.3 / width) * i * precision + offsetX);
         py = sin(i * precision + offsetY);
-        pz = abs((-NUMPOINTS/2.0)+i)/(NUMPOINTS/2.0);   
+        pz = abs((-NUMPOINTS/2.0)+i)/(NUMPOINTS/2.0);
         mesh.setVertex(i, ofPoint( -curveWidth/2.0 + px * curveWidth, -curveHeight/2.0 + py * curveHeight, -curveDepth/2.0 + curveZPos + pz * curveDepth));
     }
     
+    BuildGrid();
 }
 // selfDraw draws in 3D using the default ofEasyCamera
 // you can change the camera by returning getCameraRef()
 void CloudsVisualSystemOscillations::selfDraw(){
     ofBackground(invertColorScheme? ofColor(180,180,180) : ofColor(0,0,0));
+    
+    if (displayGrid) {
+        glEnable(GL_LINE_STIPPLE_PATTERN);
+        grid.setMode(OF_PRIMITIVE_LINES);
+        
+//        grid.drawWireframe();
+        grid.drawVertices();
+    }
+    
     glDisable(GL_DEPTH_TEST);
-
     mesh.setMode(OF_PRIMITIVE_LINE_LOOP);
     ofSetLineWidth(lineWidth);
 	mesh.drawWireframe();
@@ -215,4 +246,32 @@ void CloudsVisualSystemOscillations::selfMousePressed(ofMouseEventArgs& data){
 
 void CloudsVisualSystemOscillations::selfMouseReleased(ofMouseEventArgs& data){
 	
+}
+
+
+
+/* Custom Functions */
+
+void CloudsVisualSystemOscillations::BuildGrid(){
+    grid.clear();
+    int spacing = (int) floor(GridPointSpacing);
+    
+    ofFloatColor c = (!invertColorScheme)? ofFloatColor(1,1,1,GridPointAlpha) : ofFloatColor(0,0,0,GridPointAlpha);
+    
+    for (float x = GridClipping.low; x < GridClipping.high ; x += spacing){
+        for (float y = GridClipping.low; y < GridClipping.high ; y +=spacing){
+            float _x1, _x2, _y1, _y2, _z1, _z2;
+            for (int i = 0 ; i < 3 ; i++){
+                switch (i){
+                    case 0: _x1 = _x2 = x; _y1 = _y2 = y; _z1 = GridClipping.low; _z2 = GridClipping.high; break;
+                    case 1: _x1 = _x2 = x; _z1 = _z2 = y; _y1 = GridClipping.low; _y2 = GridClipping.high; break;
+                    case 2: _z1 = _z2 = x; _y1 = _y2 = y; _x1 = GridClipping.low; _x2 = GridClipping.high; break;
+                }
+                grid.addVertex(ofPoint(_x1,_y1,_z1));
+                grid.addColor(c);
+                grid.addVertex(ofPoint(_x2,_y2,_z2));
+                grid.addColor(c);
+            }
+        }
+    }
 }

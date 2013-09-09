@@ -104,7 +104,6 @@ protected:
     float width,height; 
     float offsetX, offsetY;
     
-//    ofVbo vbo;
     ofVboMesh mesh;
     float heightFactor, precision;
     float curveProgress, speed, lineWidth;
@@ -113,10 +112,19 @@ protected:
     ofxAutoReloadedShader crtShader;
     
 	ofxUISuperCanvas* customGui;
-	bool customToggle;
+    ofxUISuperCanvas* gridControls;
     bool invertColorScheme;
-	
-	ofImage someImage;
+    
+    
+    //Grid
+    bool displayGrid;
+//	bool pointDensity;
+    ofVboMesh grid;
+    //struct { struct {float low, high;} x, y, z; } GridClipping;
+    struct {float low, high; } GridClipping;
+    float GridPointSpacing;
+    float GridPointAlpha;
+    void BuildGrid();
 
 
 };
