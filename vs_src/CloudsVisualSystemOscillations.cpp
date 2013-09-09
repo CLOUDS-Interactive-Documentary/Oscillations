@@ -52,7 +52,9 @@ void CloudsVisualSystemOscillations::selfSetupGui(){
 
     gridControls->addToggle("Display Grid", &displayGrid);
     gridControls->addRangeSlider("Range", -5000, 5000, &(GridClipping.low), &(GridClipping.high));
-    gridControls->addSlider("Spacing", 10, 5000, &GridPointSpacing);
+    gridControls->addSlider("Spacing", 100, 2000, &GridPointSpacing);
+    gridControls->addNumberDialer("Pattern", 0, 5, &GridPattern, 0);
+    gridControls->addSlider("Line Width",0,10, &GridLineWidth);
     gridControls->addSlider("Alpha", 0, 1, &GridPointAlpha);
 
     ofAddListener(gridControls->newGUIEvent, this, &CloudsVisualSystemOscillations::selfGuiEvent);
@@ -110,16 +112,6 @@ void CloudsVisualSystemOscillations::selfSetup(){
     //TODO: Find way to update on every resize
     
     offsetX = offsetY = 0;
-   /*
-    GridClipping.x.low= -3000;
-    GridClipping.x.high= 3000;
-    GridClipping.y.low= -3000;
-    GridClipping.y.high= 3000;
-    GridClipping.z.low=  3000;
-    GridClipping.z.high=-3000;
-    GridPointSpacing = 100;
-    GridPointAlpha = 1;
-    */
     BuildGrid();
     
     crtShader.load(getVisualSystemDataPath() +"shaders/oscillationsShader");
@@ -172,16 +164,24 @@ void CloudsVisualSystemOscillations::selfUpdate(){
 void CloudsVisualSystemOscillations::selfDraw(){
     ofBackground(invertColorScheme? ofColor(180,180,180) : ofColor(0,0,0));
     
+
+//    ofEnableBlendMode(OF_BLENDMODE_ADD);    
     if (displayGrid) {
-        glEnable(GL_LINE_STIPPLE_PATTERN);
+        glLineStipple((int)GridPattern, 0x8888);
+        ofSetLineWidth(GridLineWidth);
+        glEnable(GL_LINE_STIPPLE);
         grid.setMode(OF_PRIMITIVE_LINES);
         
-//        grid.drawWireframe();
-        grid.drawVertices();
+        grid.drawWireframe();
+//        grid.drawVertices();
+//        grid.draw();
+        glDisable(GL_LINE_STIPPLE);
     }
     
-    glDisable(GL_DEPTH_TEST);
+        glDisable(GL_DEPTH_TEST);
+    
     mesh.setMode(OF_PRIMITIVE_LINE_LOOP);
+
     ofSetLineWidth(lineWidth);
 	mesh.drawWireframe();
 }

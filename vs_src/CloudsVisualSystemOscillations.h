@@ -117,14 +117,13 @@ protected:
     
     
     //Grid
-    bool displayGrid;
-//	bool pointDensity;
     ofVboMesh grid;
-    //struct { struct {float low, high;} x, y, z; } GridClipping;
+    bool displayGrid;
     struct {float low, high; } GridClipping;
     float GridPointSpacing;
     float GridPointAlpha;
     void BuildGrid();
-
+    float GridLineWidth;
+    float GridPattern;
 
 };
