@@ -255,23 +255,20 @@ void CloudsVisualSystemOscillations::selfMouseReleased(ofMouseEventArgs& data){
 void CloudsVisualSystemOscillations::BuildGrid(){
     grid.clear();
     int spacing = (int) floor(GridPointSpacing);
-    
     ofFloatColor c = (!invertColorScheme)? ofFloatColor(1,1,1,GridPointAlpha) : ofFloatColor(0,0,0,GridPointAlpha);
-    
     for (float x = GridClipping.low; x < GridClipping.high ; x += spacing){
         for (float y = GridClipping.low; y < GridClipping.high ; y +=spacing){
-            float _x1, _x2 = x;
-            float _y1, _y2 = y;
-            float _z1 = GridClipping.low, _z2 = GridClipping.high;
-
+            float   _x1 =x, _x2 = x,
+                    _y1 = y, _y2 = y,
+                    _z1 = GridClipping.low, _z2 = GridClipping.high;
+            
             for (int i = 0 ; i < 3 ; i++){
                 grid.addVertex(ofPoint(_x1,_y1,_z1));
                 grid.addVertex(ofPoint(_x2,_y2,_z2));
-                grid.addColor(c);
-                grid.addColor(c);
-                //Group theory in your face huh.
-                swap(_x1, _y1); swap(_y1, _z1);
-                swap(_x2, _y2); swap(_y2, _z2);
+                grid.addColor(c); grid.addColor(c);
+                //Group theory in your face: (12)(23) ~ (123)
+                swap(_y1, _z1); swap(_x1, _y1);
+                swap(_y2, _z2); swap(_x2, _y2);
             }
         }
     }
