@@ -72,7 +72,7 @@ void CloudsVisualSystemOscillations::selfGuiEvent(ofxUIEventArgs &e){
 //	}
 
     //Check if the grid was updated
-    if (e.getName() == "Grid"){
+    if (e.widget->getName() == "Grid"){
         BuildGrid();
     }
 }
