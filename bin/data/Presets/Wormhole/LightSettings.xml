@@ -3,7 +3,7 @@
     <Name>LightSettings</Name>
     <IsMinified>0</IsMinified>
     <XPosition>213.000000000</XPosition>
-    <YPosition>1.000000000</YPosition>
+    <YPosition>431.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>2</Kind>
@@ -18,7 +18,7 @@
 <Widget>
     <Kind>25</Kind>
     <Name>R</Name>
-    <Value>0.502617776</Value>
+    <Value>0.408376962</Value>
 </Widget>
 <Widget>
     <Kind>25</Kind>

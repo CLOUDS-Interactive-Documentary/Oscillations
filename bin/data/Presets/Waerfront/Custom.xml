@@ -45,3 +45,8 @@
     <Name>Line Width</Name>
     <Value>1.970443249</Value>
 </Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Black on white</Name>
+    <Value>0</Value>
+</Widget>
